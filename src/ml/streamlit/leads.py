@@ -4,21 +4,28 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
 import pickle
+import urllib.request
+import shutil
+import tempfile
 
 def main():
     st.header("Leads")
     st.sidebar.header("Configuration")
 
-    market = pd.read_csv('/home/claudiomanoel/codenation/trabalhofinal/ml-lead/data/raw/estaticos_portfolio1.csv')
-    market = market.drop(['Unnamed: 0'], axis=1)
+    with urllib.request.urlopen('https://rawcdn.githack.com/claudiomanoel/aceleradev/dfc6f8f65cb4029b475187a143d7ebaaac14c463/output_web/id_cluster.pickle') as response:
+        with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+            shutil.copyfileobj(response, tmp_file)
+        with open(tmp_file.name, 'rb') as f:
+            id_cluster = pickle.load(f)
 
-    with open('/home/claudiomanoel/codenation/trabalhofinal/ml-lead/output/id_cluster.pickle', 'rb') as f:
-        id_cluster = pickle.load(f)
+    #use for local development
+    # with open('../../output_web/id_cluster.pickle', 'rb') as f:
+    #         id_cluster = pickle.load(f)
 
     csv_file_buffer = st.sidebar.file_uploader("Upload the market file", type=["csv"])
-
+    
     if csv_file_buffer is not None:
-        load_data(csv_file_buffer, market, id_cluster)
+        load_data(csv_file_buffer, id_cluster)
 
     write_about()
 
@@ -30,13 +37,13 @@ def write_about():
     )
     
 
-def load_data(csv_file_buffer, market, id_cluster):
+def load_data(csv_file_buffer, id_cluster):
+    print("Loading")
     df = pd.read_csv(csv_file_buffer, sep=',')
 
     # min: 0h, max: 23h, default: 17h
     samples_per_element = st.slider('Samples per client', 1, 100)
     result = recomender_lead(df, id_cluster, samples_per_element)
-    elements = get_elements(market, result['leads'])
     st.markdown(get_table_download_link(
         result['leads']), unsafe_allow_html=True)
 
