@@ -1,1 +1,9 @@
-/datasets/*
+.ipynb_checkpoints 
+mlruns/ 
+__pycache__/ 
+.vscode/ 
+catboost_info/ 
+.metaflow 
+data/
+output/ 
+*_env/
