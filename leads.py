@@ -12,20 +12,20 @@ def main():
     st.header("Leads")
     st.sidebar.header("Configuration")
 
-    with urllib.request.urlopen('https://rawcdn.githack.com/claudiomanoel/aceleradev/dfc6f8f65cb4029b475187a143d7ebaaac14c463/output_web/id_cluster.pickle') as response:
-        with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-            shutil.copyfileobj(response, tmp_file)
-        with open(tmp_file.name, 'rb') as f:
-            id_cluster = pickle.load(f)
-
-    #use for local development
-    # with open('../../output_web/id_cluster.pickle', 'rb') as f:
+    # with urllib.request.urlopen('https://rawcdn.githack.com/claudiomanoel/aceleradev/dfc6f8f65cb4029b475187a143d7ebaaac14c463/output_web/id_cluster.pickle') as response:
+    #     with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+    #         shutil.copyfileobj(response, tmp_file)
+    #     with open(tmp_file.name, 'rb') as f:
     #         id_cluster = pickle.load(f)
 
-    csv_file_buffer = st.sidebar.file_uploader("Upload the market file", type=["csv"])
+    # #use for local development
+    # # with open('../../output_web/id_cluster.pickle', 'rb') as f:
+    # #         id_cluster = pickle.load(f)
+
+    # csv_file_buffer = st.sidebar.file_uploader("Upload the market file", type=["csv"])
     
-    if csv_file_buffer is not None:
-        load_data(csv_file_buffer, id_cluster)
+    # if csv_file_buffer is not None:
+    #     load_data(csv_file_buffer, id_cluster)
 
     write_about()
 
