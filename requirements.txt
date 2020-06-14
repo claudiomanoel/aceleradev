@@ -1,3 +1,4 @@
+gunicorn
 category-encoders
 coverage
 datetime
@@ -18,3 +19,4 @@ yellowbrick
 pandas-profiling
 vega_datasets
 streamlit
+sklearn
