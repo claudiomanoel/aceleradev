@@ -17,3 +17,4 @@ tqdm
 yellowbrick
 pandas-profiling
 vega_datasets
+streamlit
